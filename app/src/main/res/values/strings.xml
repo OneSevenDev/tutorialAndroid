@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Tutorial01</string>
+    <string name="saludo">Hello Manuel!</string>
+    <string name="user">Usuario</string>
+    <string name="key">Contraseña</string>
+    <string name="enviar">Enviar</string>
+    <string name="cambio">Ingresar Cambio</string>
+    <string name="mostrar">Mostrar Toast</string>
+</resources>
