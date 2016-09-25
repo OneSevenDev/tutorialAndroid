@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.toast:
                 Context context = getApplicationContext();
-                CharSequence text = "Mosntrando Toast!";
+                CharSequence text = "Mostrando Toast!";
                 int duration = Toast.LENGTH_SHORT;
 
                 Toast toast = Toast.makeText(context, text, duration);
