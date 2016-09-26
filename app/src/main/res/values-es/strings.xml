@@ -5,5 +5,5 @@
     <string name="key">Contraseña</string>
     <string name="enviar">Enviar</string>
     <string name="cambio">Ingresar Cambio</string>
-    <string name="mostrar">Mostrar brindis - Continuar</string>
+    <string name="mostrar">Mostrar mensaje - Continuar</string>
 </resources>
