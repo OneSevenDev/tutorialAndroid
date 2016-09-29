@@ -2,21 +2,33 @@ package mobile.oneseven.com.tutorial01;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, SensorEventListener {
 
     TextView textView;
     Button button, bmostrar;
     EditText cambio, user, pass;
     ImageView imageView;
+
+    //Esto se necesita para trabajar con el sensor
+    LinearLayout linearLayout;
+    SensorManager sensorManager;
+    Sensor sensor;
+    TextView textsensor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +50,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button.setOnClickListener(this);
         bmostrar.setOnClickListener(this);
 
+        //sensor
+        linearLayout = (LinearLayout) findViewById(R.id.linear);
+        textsensor = (TextView) findViewById(R.id.textosensor);
+
+        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        sensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
+        sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     @Override
@@ -70,5 +89,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        //Se recoge el valor que nos da el sensor de proximidad y se guarda en texto
+        String texto = String.valueOf(event.values[0]);
+        textsensor.setText(texto);
+
+        float var = Float.parseFloat(texto);
+
+        if (var == 0){
+            linearLayout.setBackgroundColor(Color.GRAY);
+        } else {
+            linearLayout.setBackgroundColor(Color.YELLOW);
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
     }
 }
