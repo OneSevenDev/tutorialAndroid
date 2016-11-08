@@ -3,9 +3,12 @@ package mobile.oneseven.com.tutorial01;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SecondActivity extends AppCompatActivity {
 
@@ -14,7 +17,7 @@ public class SecondActivity extends AppCompatActivity {
     //Listas
     ListView listView;
     String[] var = new String[] {
-            "Holanda",
+            "Siguiente List Personalizable",
             "Peru",
             "Argentina",
             "Ecuador",
@@ -48,5 +51,17 @@ public class SecondActivity extends AppCompatActivity {
         //Agregando Items a la lista
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1,var);
         listView.setAdapter(arrayAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if ( position < 1) {
+                    startActivity(new Intent(SecondActivity.this, ThirdActivity.class));
+                } else {
+                    int pos = position + 1;
+                    Toast.makeText(getApplicationContext(), "Posicion: " + pos + " - Pais: " + var[position], Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }

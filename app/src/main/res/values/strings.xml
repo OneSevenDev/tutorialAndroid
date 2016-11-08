@@ -7,4 +7,5 @@
     <string name="cambio">Enter changes</string>
     <string name="mostrar">Show Toast - Continue</string>
     <string name="sensor">Texto del sensor</string>
+    <string name="encabezado">encabezado</string>
 </resources>
