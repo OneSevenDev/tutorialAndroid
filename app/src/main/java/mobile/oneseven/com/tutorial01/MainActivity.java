@@ -17,7 +17,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, SensorEventListener {
+import com.mobsandgeeks.saripaar.ValidationError;
+import com.mobsandgeeks.saripaar.Validator;
+
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, SensorEventListener, Validator.ValidationListener {
 
     TextView textView;
     Button button, bmostrar;
@@ -108,6 +113,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
+
+    //Validaciones para campos de textos, usando Saripar
+    @Override
+    public void onValidationSucceeded() {
+
+    }
+
+    @Override
+    public void onValidationFailed(List<ValidationError> errors) {
 
     }
 }

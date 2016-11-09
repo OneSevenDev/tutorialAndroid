@@ -8,4 +8,5 @@
     <string name="mostrar">Show Toast - Continue</string>
     <string name="sensor">Texto del sensor</string>
     <string name="encabezado">encabezado</string>
+    <string name="title_activity_web_vire">WebVireActivity</string>
 </resources>

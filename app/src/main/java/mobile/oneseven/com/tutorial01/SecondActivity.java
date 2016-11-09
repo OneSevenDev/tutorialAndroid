@@ -18,6 +18,7 @@ public class SecondActivity extends AppCompatActivity {
     ListView listView;
     String[] var = new String[] {
             "Siguiente List Personalizable",
+            "WebWiew",
             "Peru",
             "Argentina",
             "Ecuador",
@@ -57,6 +58,9 @@ public class SecondActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if ( position < 1) {
                     startActivity(new Intent(SecondActivity.this, ThirdActivity.class));
+                }
+                else if (position == 1){
+                    startActivity(new Intent(SecondActivity.this, WebVireActivity.class));
                 } else {
                     int pos = position + 1;
                     Toast.makeText(getApplicationContext(), "Posicion: " + pos + " - Pais: " + var[position], Toast.LENGTH_SHORT).show();
