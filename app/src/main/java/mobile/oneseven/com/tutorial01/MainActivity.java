@@ -19,15 +19,30 @@ import android.widget.Toast;
 
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.Email;
+import com.mobsandgeeks.saripaar.annotation.Password;
 
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, SensorEventListener, Validator.ValidationListener {
 
+    //Validaciones
+    Validator validator;
+
+    //Validacion de Usuario
+    @Email(message = "Debe incluir un correo valido, ej: ejemplo@begincodes.com")
+    private EditText user;
+
+    @Password(min = 6, scheme = Password.Scheme.ALPHA_NUMERIC_MIXED_CASE_SYMBOLS, message = "Contraseña debe incluir: letras, numeros, simbolos")
+    private EditText pass;
+
+    EditText cambio;
+    ImageView imageView;
+
+    //Campos para las vistas de layouts
     TextView textView;
     Button button, bmostrar;
-    EditText cambio, user, pass;
-    ImageView imageView;
+
 
     //Esto se necesita para trabajar con el sensor
     LinearLayout linearLayout;
@@ -47,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bmostrar = (Button) findViewById(R.id.toast);
 
         cambio = (EditText) findViewById(R.id.cambios);
+
         user = (EditText) findViewById(R.id.user);
         pass = (EditText) findViewById(R.id.key);
 
@@ -62,6 +78,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
         sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
+
+        //Valicaciones, creando instancias
+        validator = new Validator(this);
+        validator.setValidationListener(this);
     }
 
     @Override
@@ -72,24 +92,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 textView.setText(datos);
                 break;
             case R.id.toast:
-                //Inicializamos datos necesarios para el Toast
-                Context context = getApplicationContext();
-                CharSequence text = "Mostrando Toast!";
-                int duration = Toast.LENGTH_SHORT;
-
-                String dato = user.getText().toString();
-                String dato2 = pass.getText().toString();
-
-                //Se crea una instancia para llamar la siguiente actividad
-                Intent intent = new Intent(MainActivity.this, SecondActivity.class);
-                intent.putExtra("user",dato);
-                intent.putExtra("pass",dato2);
-                startActivity(intent);
-
-                //Muestra el mensaje Toast
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
-
+                validator.validate();
                 break;
             default:
                 break;
@@ -119,11 +122,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //Validaciones para campos de textos, usando Saripar
     @Override
     public void onValidationSucceeded() {
+        //Inicializamos datos necesarios para el Toast
+        Context context = getApplicationContext();
+        CharSequence text = "Mostrando Toast!";
+        int duration = Toast.LENGTH_SHORT;
 
+        String dato = user.getText().toString();
+        String dato2 = pass.getText().toString();
+
+        //Se crea una instancia para llamar la siguiente actividad
+        Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+        intent.putExtra("user",dato);
+        intent.putExtra("pass",dato2);
+        startActivity(intent);
+
+        //Muestra el mensaje Toast
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
     }
 
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
+        for (ValidationError error : errors) {
+            View view = error.getView();
+            String message = error.getCollatedErrorMessage(this);
 
+            // Display error messages ;)
+            if (view instanceof EditText) {
+                ((EditText) view).setError(message);
+            } else {
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }

@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Tutorial01</string>
     <string name="saludo">Hello Manuel!</string>
-    <string name="user">User</string>
+    <string name="user">E-mail</string>
     <string name="key">Password</string>
     <string name="enviar">Send</string>
     <string name="cambio">Enter changes</string>
